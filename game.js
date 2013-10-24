@@ -8,6 +8,8 @@
   var Game = Asteroids.Game = function(ctx){
   	this.ctx = ctx;
 		this.asteroids = this.addAsteroids(5);
+		this.ship = new Asteroids.Ship([DIM_X/2, DIM_Y/2], [0,0]);
+		this.intervalID = null
   };
 
 	Game.prototype.addAsteroids = function(numAsteroids){
@@ -25,21 +27,38 @@
 		this.asteroids.forEach(function(asteroid){
 			asteroid.draw(ctx);
 		})
+		this.ship.draw(ctx);
 	}
 
 	Game.prototype.move = function(){
 		this.asteroids.forEach(function(asteroid){
 			asteroid.move();
 		})
+		this.ship.move();
 	}
 
 	Game.prototype.step = function(){
+		this.checkCollisions();
 		this.move();
 		this.draw();
 	}
 
 	Game.prototype.start = function(){
-		setInterval(this.step.bind(this), FPS);
+		this.intervalID = setInterval(this.step.bind(this), FPS);
+	}
+
+	Game.prototype.checkCollisions = function(){
+		that = this;
+		this.asteroids.forEach(function(asteroid) {
+			if (asteroid.isCollidedWith(that.ship)) {
+				alert("You Lost!");
+				that.stop();
+			}
+		})
+	}
+
+	Game.prototype.stop = function(){
+		clearInterval(this.intervalID);
 	}
 
 })(this);
