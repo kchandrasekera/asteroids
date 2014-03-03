@@ -6,7 +6,6 @@ var sum = function() {
 	return sum;
 }
 
-// console.log(sum(1,2,3,4));
 
 
 Function.prototype.myBind = function(obj) {
@@ -20,7 +19,6 @@ Function.prototype.myBind = function(obj) {
 }
 
 var mySum = sum.myBind(null, 1, 2);
-// console.log(mySum(5));
 
 
 var curriedSum = function(numArgs) {
@@ -39,7 +37,6 @@ var curriedSum = function(numArgs) {
 	return _curriedSum;
 }
 
-// console.log(curriedSum(4)(1)(2)(3)(4));
 
 Function.prototype.curry = function(numArgs) {
 	var args = [];
